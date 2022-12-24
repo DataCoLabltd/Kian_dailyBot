@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile-daily-bot
+    command: bash -c "python manage.py makemigrations && python manage.py migrate"
+    volumes:
+      - .:/usr/src/app/
+    depends_on:
+      - postgres_db
+    env_file:
+      - ./.env
+
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile-daily-bot
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app/
+    env_file:
+      - ./.env
+    ports:
+      - 8040:8000
+    depends_on:
+      - migrate
+      - postgres_db
+      - redis
+  postgres_db:
+    image: postgres:15.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+    ports:
+      - "3019:5432"
+    restart: always
+
+  redis:
+    image: redis:alpine
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile-daily-bot
+    command: celery -A daily_bot beat -l INFO
+    volumes:
+      - .:/usr/src/app/
+    env_file:
+      - ./.env
+    depends_on:
+      - django
+      - redis
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile-daily-bot
+    command: celery -A daily_bot worker -l INFO
+    volumes:
+      - .:/usr/src/app/
+    env_file:
+      - ./.env
+    depends_on:
+      - django
+      - redis
+
+volumes:
+    postgres_data:
