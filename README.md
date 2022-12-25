@@ -27,3 +27,6 @@ To run Kian_dailyBot in development mode; Just use steps below:
   sudo docker exec -it daily_bot_django_1 /bin/bash
         python manage.py createsuperuser
 ```
+You can access the admin panel through the following address. In the management panel, you can see information about users, channels, etc., and also prepare reports for each user.
+
+ http://localhost:8040/admin
