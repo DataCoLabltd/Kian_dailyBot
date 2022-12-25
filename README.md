@@ -20,4 +20,10 @@ To run Kian_dailyBot in development mode; Just use steps below:
   ```bash
   git clone https://github.com/DataCoLabltd/Kian_dailyBot.git && cd Kian_dailyBot/daily_bot/
   sudo docker-compose up --build
+  sudo docker exec -it daily_bot_postgres_db_1 /bin/bash
+        psql -U postgres
+        CREATE USER daily_bot WITH SUPERUSER PASSWORD '1234';
+        CREATE DATABASE daily_bot;
+  sudo docker exec -it daily_bot_django_1 /bin/bash
+        python manage.py createsuperuser
 ```
