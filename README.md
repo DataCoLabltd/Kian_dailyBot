@@ -1,5 +1,5 @@
 # Kian_dailyBot
-A robot for reporting users and managing reports
+A functionaning robot for daily reports through Slack workspaces.
 ## How to run
 To run Kian_dailyBot in development mode; Just use steps below:
 
