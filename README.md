@@ -1,3 +1,12 @@
+
+
+
+![KianBot](https://user-images.githubusercontent.com/68013105/209814605-40fac9dc-4825-43a2-8da0-4df863faf618.jpg)
+
+
+
+
+
 # Kian_dailyBot
 A functionaning robot for daily reports through Slack workspaces.
 ## How to run
